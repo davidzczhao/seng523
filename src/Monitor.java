@@ -2,7 +2,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-public class Minitor {
+public class Monitor {
 
 	private JFrame frame;
 
@@ -13,7 +13,7 @@ public class Minitor {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Minitor window = new Minitor();
+					Monitor window = new Monitor();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -25,7 +25,7 @@ public class Minitor {
 	/**
 	 * Create the application.
 	 */
-	public Minitor() {
+	public Monitor() {
 		initialize();
 	}
 
