@@ -1,3 +1,4 @@
+import javax.swing.JFrame;
 
 public class Processor {
 
@@ -7,30 +8,17 @@ public class Processor {
 	public CashDisburser cDisburser;
 	public CashBank cBank;
 	
-	public Processor() {
+	private JFrame f;
+	
+	public Processor(JFrame frame) {
 		db = new AccountDatabase();
 		scanner = new CardScanner();
 		keypad = new Keypad();
 		cDisburser = new CashDisburser();
 		cBank = new CashBank();
 		
-		runThrough();
+		f = frame; // Handle to the frame
 	}
 	
-	// Designed for a single run.
-	public void runThrough() {
-		// Welcome message already being displayed, begin with card insertion
-		
-		// Check pin
-		
-		// Check amount
-		
-		// Verify account balance
-		
-		// Verify cash availability
-		
-		// Disburse cash
-		
-		// Eject card
-	}
+	// Decide on how processor will work
 }

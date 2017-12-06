@@ -14,6 +14,6 @@ public class CardScanner {
 	}
 	
 	public static boolean ejectCard() {
-		return true; // Always eject once called
+		return true; // Always eject once called. Doesn't really do anything.
 	}
 }
