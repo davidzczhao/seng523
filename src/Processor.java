@@ -3,7 +3,6 @@ import javax.swing.JFrame;
 public class Processor {
 
 	public AccountDatabase db;
-	public CardScanner scanner;
 	public Keypad keypad;
 	public CashDisburser cDisburser;
 	public CashBank cBank;
@@ -12,7 +11,6 @@ public class Processor {
 	
 	public Processor(JFrame frame) {
 		db = new AccountDatabase();
-		scanner = new CardScanner();
 		keypad = new Keypad();
 		cDisburser = new CashDisburser();
 		cBank = new CashBank();
@@ -20,5 +18,5 @@ public class Processor {
 		f = frame; // Handle to the frame
 	}
 	
-	// Decide on how processor will work
+	// Not using this simply because of time constraint. Decided to brute force in the GUI class instead.
 }

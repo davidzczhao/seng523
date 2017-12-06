@@ -13,7 +13,12 @@ public class Monitor {
 
 	private JFrame frame;
 	private Processor p;
+	
+	private int state; // 1 = welcome, 2 = check pin, 3 = check amount
 
+	private int accNum; // Stores account number
+	private int accPIN; // Stores pin number
+	
 	/**
 	 * Launch the application.
 	 */
@@ -41,6 +46,8 @@ public class Monitor {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		state = 1;
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 600, 350);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -189,6 +196,57 @@ public class Monitor {
 		
 		JButton btnEnter = new JButton("ENTER");
 		btnEnter.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		btnEnter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (state == 1) { // welcome -> check pin
+					// Account number should be entered
+					accNum = Integer.parseInt(p.keypad.enter());
+					p.keypad.clear();
+					textArea.setText("Please enter your PIN");
+					state = 2;
+				} else if (state == 2) { // checking pin
+					// PIN should be entered
+					accPIN = Integer.parseInt(p.keypad.enter());
+					p.keypad.clear();
+					
+					if (!CardScanner.checkPin(p.db, accNum, accPIN)) {
+						textArea.setText("Incorrect PIN, please re-enter your PIN");
+					} else {
+						textArea.setText("Please choose the amount you would like to withdraw:\n1: $20\n2: $40\n3: $60\n4: $80\n5: $100");
+						state = 3;
+					}
+				} else if (state == 3) {
+					// Should have entered an option of how much to withdraw
+					int cashAmount = Integer.parseInt(p.keypad.enter());
+					p.keypad.clear();
+					
+					Account temp = p.db.findAcc(accNum);
+					
+					if (cashAmount > temp.maxWithdraw) {
+						textArea.setText("You're not allowed to withdraw this much, please choose another amount to withdraw");
+					} else {
+						// Verify acc. balance
+						if (cashAmount > temp.balance) {
+							textArea.setText("Insufficient funds, please take your card");
+							return;
+						}
+						
+						// Verify cash availability
+						if (cashAmount > p.cBank.balance) {
+							textArea.setText("Insufficient ATM funds, please take your card");
+							return;
+						}
+						
+						// Disburse cash
+						p.cBank.disburse(cashAmount);
+						temp.withdraw(cashAmount);
+						
+						// Eject card
+						textArea.setText("Please collect your bills and card, thank you!");
+					}
+				}
+			}
+		});
 		btnEnter.setBounds(496, 169, 78, 23);
 		frame.getContentPane().add(btnEnter);
 		

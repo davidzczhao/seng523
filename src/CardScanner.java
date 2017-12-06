@@ -5,7 +5,7 @@ public class CardScanner {
 		boolean pinValid = false;
 		
 		for (int i = db.accounts.size(); i > 0; i--)
-			if (db.accounts.get(i).accountNum == accNum && db.accounts.get(i).pin == pin) {
+			if (db.accounts.get(i-1).accountNum == accNum && db.accounts.get(i-1).pin == pin) {
 				pinValid = true;
 				break;
 			}
