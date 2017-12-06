@@ -6,5 +6,7 @@ public class CashBank {
 		balance = 1000; // Initial funds
 	}
 	
-	
+	public void disburse(int amount) {
+		balance -= amount;
+	}
 }
